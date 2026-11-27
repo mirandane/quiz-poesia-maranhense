@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Poesia Maranhense</title>
+<style>
+body{font-family:Arial;background:#fff8e1;padding:20px;max-width:600px;margin:auto}
+h1{color:#2e7d32;text-align:center}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+button{background:#2e7d32;color:white;border:none;padding:12px 20px;border-radius:8px;width:100%;font-size:16px;margin-top:10px}
+input{width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;margin-top:10px}
+.opcao{display:block;background:#f1f8e9;padding:10px;margin:8px 0;border-radius:8px;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>🌴 Quiz Poesia Maranhense</h1>
+<p style="text-align:center">Por: Mayane e Juliana</p>
+<div class="card" id="tela"></div>
+<script>
+let nome=""; let pontos=0; let atual=0;
+let perguntas=[
+{q:"Quem escreveu o poema 'Canção do Exílio'?",o:["Machado de Assis","Gonçalves Dias","Carlos Drummond de Andrade"],c:1},
+{q:"Gonçalves Dias nasceu em qual estado?",o:["Maranhão","Bahia","Pará"],c:0},
+{q:"Qual é o primeiro verso de 'Canção do Exílio'?",o:["No meio do caminho tinha uma pedra","Minha terra tem palmeiras, onde canta o sabiá","É preciso amar as pessoas como se não houvesse amanhã"],c:1},
+{q:"Gonçalves Dias é considerado um poeta de qual movimento?",o:["Realismo","Modernismo","Romantismo"],c:2},
+{q:"Qual é a cidade natal de Gonçalves Dias?",o:["Caxias","São Luís","Bacabal"],c:0}
+];
+function inicio(){
+document.getElementById("tela").innerHTML=`<p>Digite seu nome:</p><input id="n" placeholder="Seu nome"><button onclick="comecar()">Começar</button>`;
+}
+function comecar(){ nome=document.getElementById("n").value||"Amiga"; mostrar(); }
+function mostrar(){
+let p=perguntas[atual];
+let html=`<p><b>Pergunta ${atual+1} de 5</b></p><h3>${p.q}</h3>`;
+p.o.forEach((op,i)=>{ html+=`<label class="opcao"><input type="radio" name="r" value="${i}"> ${String.fromCharCode(97+i)}) ${op}</label>`; });
+html+=`<button onclick="responder()">Responder</button>`;
+document.getElementById("tela").innerHTML=html;
+}
+function responder(){
+let sel=document.querySelector('input[name="r"]:checked');
+if(!sel){ alert("Escolha uma resposta!"); return; }
+if(parseInt(sel.value)===perguntas[atual].c){ pontos++; alert("Correto!"); } else { alert("Errado!"); }
+atual++;
+if(atual<perguntas.length) mostrar();
+else document.getElementById("tela").innerHTML=`<h2>🎉 FIM DO QUIZ</h2><p>${nome}, você acertou <b>${pontos} de 5</b> perguntas!</p><button onclick="location.reload()">Jogar de novo</button>`;
+}
+inicio();
+</script>
+</body>
+</html>
